@@ -1,6 +1,7 @@
 package com.damnjan.nystores.model.responseModel;
 
 import lombok.*;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 @Getter
 @Setter
@@ -19,6 +20,5 @@ public class StoreDto {
     private String stateAbbreviation;
     private String zipCode;
     private String squareFootage;
-    private Double latitude;
-    private Double longitude;
+    private GeoPoint location;
 }

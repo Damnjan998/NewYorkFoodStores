@@ -1,10 +1,11 @@
 package com.damnjan.nystores.validator;
 
-import com.damnjan.nystores.exception.IncorrectConditionForNameOrAddressException;
-import com.damnjan.nystores.exception.IncorrectLatitudeOrLongitudeException;
-import com.damnjan.nystores.exception.InvalidPageOrSizeException;
+import co.elastic.clients.elasticsearch._types.DistanceUnit;
+import com.damnjan.nystores.exception.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.Arrays;
 
 @Service
 public class StoreValidatorService {
@@ -27,12 +28,29 @@ public class StoreValidatorService {
     }
 
     public void checkPageOrSize(Integer page, Integer size) throws InvalidPageOrSizeException {
-        if (page <= 0)  {
+        if (page <= 0) {
             throw new InvalidPageOrSizeException("Page index must not be less than one.");
         }
 
         if (size < 1) {
             throw new InvalidPageOrSizeException("Page size must not be less than one.");
+        }
+    }
+
+    public void checkDistanceAndUnit(int distance, String unit) throws InvalidDistanceException,
+            InvalidUnitException, InvalidUnitValueException {
+        if (distance < 1) {
+            throw new InvalidDistanceException("Distance must be greater then 0.");
+        }
+
+        if (!StringUtils.hasText(unit)) {
+            throw new InvalidUnitException("Unit must be present.");
+        } else {
+            DistanceUnit[] values = DistanceUnit.values();
+
+            if (Arrays.stream(values).noneMatch(distanceUnit -> distanceUnit.jsonValue().equals(unit))) {
+                throw new InvalidUnitValueException("Bad unit value.");
+            }
         }
     }
 }
