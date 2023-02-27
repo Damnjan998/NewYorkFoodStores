@@ -1,7 +1,6 @@
 package com.damnjan.nystores.service;
 
 import com.damnjan.nystores.document.Store;
-import com.damnjan.nystores.exception.*;
 import com.damnjan.nystores.mapper.StoreMapper;
 import com.damnjan.nystores.model.StoreCSV;
 import com.damnjan.nystores.model.responseModel.PageResponseModel;
@@ -60,16 +59,14 @@ public class StoreService {
         storeRepository.saveAll(storeList);
     }
 
-    public PageResponseModel<StoreDto> getClosestStore(double latitude, double longitude, int distance, String unit,
-                                                       Integer page, Integer size)
-            throws IncorrectLatitudeOrLongitudeException, InvalidPageOrSizeException, InvalidUnitValueException,
-            InvalidDistanceException, InvalidUnitException {
+    public PageResponseModel<StoreDto> getClosestStore(double lat, double lon, int distance, String unit,
+                                                       int page, int size) {
 
-        storeValidator.checkLatitudeAndLongitude(latitude, longitude);
+        storeValidator.checkLatitudeAndLongitude(lat, lon);
         storeValidator.checkPageOrSize(page, size);
         storeValidator.checkDistanceAndUnit(distance, unit);
 
-        GeoPoint geoPoint = new GeoPoint(latitude, longitude);
+        GeoPoint geoPoint = new GeoPoint(lat, lon);
 
         Query query = new CriteriaQuery(new Criteria(LOCATION).within(geoPoint, distance + unit));
 
@@ -89,8 +86,7 @@ public class StoreService {
                 storeSearchPage.getNumber() + 1, storeSearchPage.getTotalElements());
     }
 
-    public PageResponseModel<StoreDto> getStoreByNameOrAddress(String condition, Integer page, Integer size)
-            throws IncorrectConditionForNameOrAddressException, InvalidPageOrSizeException {
+    public PageResponseModel<StoreDto> getStoreByNameOrAddress(String condition, int page, int size) {
 
         storeValidator.checkNameOrAddress(condition);
         storeValidator.checkPageOrSize(page, size);

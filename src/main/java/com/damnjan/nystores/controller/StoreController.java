@@ -1,6 +1,5 @@
 package com.damnjan.nystores.controller;
 
-import com.damnjan.nystores.exception.*;
 import com.damnjan.nystores.model.responseModel.PageResponseModel;
 import com.damnjan.nystores.model.responseModel.StoreDto;
 import com.damnjan.nystores.service.StoreService;
@@ -28,18 +27,15 @@ public class StoreController {
                                                                        @RequestParam double lon,
                                                                        @RequestParam int distance,
                                                                        @RequestParam String unit,
-                                                                       @RequestParam(defaultValue = "1") Integer page,
-                                                                       @RequestParam(defaultValue = "20") Integer size)
-            throws IncorrectLatitudeOrLongitudeException, InvalidPageOrSizeException, InvalidUnitValueException,
-            InvalidDistanceException, InvalidUnitException {
+                                                                       @RequestParam(defaultValue = "1") int page,
+                                                                       @RequestParam(defaultValue = "20") int size) {
         return ResponseEntity.ok(storeService.getClosestStore(lat, lon, distance, unit, page, size));
     }
 
     @GetMapping("name_address")
     public ResponseEntity<PageResponseModel<StoreDto>> getStoreByNameOrAddress(@RequestParam String condition,
-                                                                               @RequestParam(defaultValue = "1") Integer page,
-                                                                               @RequestParam(defaultValue = "20") Integer size)
-            throws IncorrectConditionForNameOrAddressException, InvalidPageOrSizeException {
+                                                                               @RequestParam(defaultValue = "1") int page,
+                                                                               @RequestParam(defaultValue = "20") int size) {
         return ResponseEntity.ok(storeService.getStoreByNameOrAddress(condition, page, size));
     }
 }

@@ -15,41 +15,39 @@ public class StoreValidatorService {
     private static final int MIN_LONGITUDE = -180;
     private static final int MAX_LONGITUDE = 180;
 
-    public void checkLatitudeAndLongitude(Double latitude, Double longitude) throws IncorrectLatitudeOrLongitudeException {
-        if (latitude <= MIN_LATITUDE || latitude >= MAX_LATITUDE || longitude <= MIN_LONGITUDE || longitude >= MAX_LONGITUDE) {
-            throw new IncorrectLatitudeOrLongitudeException("Latitude or Longitude are out of range.");
+    public void checkLatitudeAndLongitude(double lat, double lon) {
+        if (lat <= MIN_LATITUDE || lat >= MAX_LATITUDE || lon <= MIN_LONGITUDE || lon >= MAX_LONGITUDE) {
+            throw ExceptionSupplier.invalidLatOrLon.get();
         }
     }
 
-    public void checkNameOrAddress(String condition) throws IncorrectConditionForNameOrAddressException {
+    public void checkNameOrAddress(String condition) {
         if (!StringUtils.hasText(condition)) {
-            throw new IncorrectConditionForNameOrAddressException("You must provide condition for search.");
+            throw ExceptionSupplier.invalidConditionForNameOrAddress.get();
         }
     }
 
-    public void checkPageOrSize(Integer page, Integer size) throws InvalidPageOrSizeException {
+    public void checkPageOrSize(int page, int size) {
         if (page <= 0) {
-            throw new InvalidPageOrSizeException("Page index must not be less than one.");
+            throw ExceptionSupplier.invalidPageNumber.get();
         }
 
         if (size < 1) {
-            throw new InvalidPageOrSizeException("Page size must not be less than one.");
-        }
+            throw ExceptionSupplier.invalidSizeNumber.get();        }
     }
 
-    public void checkDistanceAndUnit(int distance, String unit) throws InvalidDistanceException,
-            InvalidUnitException, InvalidUnitValueException {
+    public void checkDistanceAndUnit(int distance, String unit) {
         if (distance < 1) {
-            throw new InvalidDistanceException("Distance must be greater then 0.");
+            throw ExceptionSupplier.invalidDistance.get();
         }
 
         if (!StringUtils.hasText(unit)) {
-            throw new InvalidUnitException("Unit must be present.");
+            throw ExceptionSupplier.invalidUnit.get();
         } else {
             DistanceUnit[] values = DistanceUnit.values();
 
             if (Arrays.stream(values).noneMatch(distanceUnit -> distanceUnit.jsonValue().equals(unit))) {
-                throw new InvalidUnitValueException("Bad unit value.");
+                throw ExceptionSupplier.invalidUnitValue.get();
             }
         }
     }
