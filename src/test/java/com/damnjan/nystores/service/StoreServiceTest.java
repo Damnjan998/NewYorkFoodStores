@@ -2,26 +2,27 @@ package com.damnjan.nystores.service;
 
 import com.damnjan.nystores.document.Store;
 import com.damnjan.nystores.exception.NyStoreException;
-import com.damnjan.nystores.mapper.StoreMapper;
-import com.damnjan.nystores.mapper.StoreMapperImpl;
 import com.damnjan.nystores.model.responseModel.PageResponseModel;
 import com.damnjan.nystores.model.responseModel.StoreDto;
 import com.damnjan.nystores.repository.StoreRepository;
 import com.damnjan.nystores.util.ErrorMessages;
 import com.damnjan.nystores.validator.StoreValidatorService;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class StoreServiceTest {
@@ -31,17 +32,8 @@ class StoreServiceTest {
     StoreValidatorService storeValidatorService = new StoreValidatorService();
     StoreValidatorService storeValidatorServiceMock = mock(StoreValidatorService.class);
     StoreRepository storeRepository = mock(StoreRepository.class);
-    StoreMapper storeMapper = new StoreMapperImpl();
     ElasticsearchOperations elasticsearchOperations = mock(ElasticsearchOperations.class);
     StoreService storeService = new StoreService(storeRepository, storeValidatorService, elasticsearchOperations);
-
-    @Test
-    void populateES() {
-    }
-
-    @Test
-    void getClosestStore() {
-    }
 
     @Test
     void should_return_stores_for_given_condition() throws IOException {
@@ -51,14 +43,18 @@ class StoreServiceTest {
         int page = 1;
         int size = 20;
 
-        StoreDto storeDtoBroome = objectMapper.readValue(new ClassPathResource("store_dto_Broome.json").getInputStream(), StoreDto.class);
-        StoreDto storeDtoErie = objectMapper.readValue(new ClassPathResource("store_dto_Erie.json").getInputStream(), StoreDto.class);
+        JavaType storeType = objectMapper.getTypeFactory().constructParametricType(ArrayList.class,
+                Store.class);
 
-        Store storeBroome = objectMapper.readValue(new ClassPathResource("store_dto_Broome.json").getInputStream(), Store.class);
-        Store storeErie = objectMapper.readValue(new ClassPathResource("store_dto_Erie.json").getInputStream(), Store.class);
+        JavaType storeDtoType = objectMapper.getTypeFactory().constructParametricType(ArrayList.class,
+                StoreDto.class);
 
-        List<StoreDto> storeDtos = Arrays.asList(storeDtoBroome, storeDtoErie);
-        List<Store> stores = Arrays.asList(storeBroome, storeErie);
+        List<Store> stores = objectMapper.readValue(new ClassPathResource("store_list.json")
+                .getInputStream(), storeType);
+
+        List<StoreDto> storeDtos = objectMapper.readValue(new ClassPathResource("store_dto_list.json")
+                .getInputStream(), storeDtoType);
+
         PageImpl<Store> storePage = new PageImpl<>(stores);
 
         // When
