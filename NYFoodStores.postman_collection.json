@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Find stores by name or address containing condtion",
+			"name": "Find stores by name or address containing condition",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -30,7 +30,37 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Example for endpoint",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/store/name_address?condition=grant",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"store",
+								"name_address"
+							],
+							"query": [
+								{
+									"key": "condition",
+									"value": "grant"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "Populate ES",
@@ -88,7 +118,49 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Example for endpoint",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/store/geo_distance?lat=-70&lon=40&distance=35&unit=km",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"store",
+								"geo_distance"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "-70"
+								},
+								{
+									"key": "lon",
+									"value": "40"
+								},
+								{
+									"key": "distance",
+									"value": "35"
+								},
+								{
+									"key": "unit",
+									"value": "km"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		}
 	]
 }
