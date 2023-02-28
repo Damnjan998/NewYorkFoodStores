@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "50c15bc2-38c7-4079-ae31-a4e5a4f54bbc",
+		"name": "NYFoodStores",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11859191"
+	},
+	"item": [
+		{
+			"name": "Find stores by name or address containing condtion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/store/name_address?condition=",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"store",
+						"name_address"
+					],
+					"query": [
+						{
+							"key": "condition",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Populate ES",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/store/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"store",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Nearest Stores for given Latitude and Longitude",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/store/geo_distance?lat=-72&lon=40&distance=35&unit=km",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"store",
+						"geo_distance"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "-72"
+						},
+						{
+							"key": "lon",
+							"value": "40"
+						},
+						{
+							"key": "distance",
+							"value": "35"
+						},
+						{
+							"key": "unit",
+							"value": "km"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
