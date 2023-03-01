@@ -21,7 +21,7 @@
 
 NewYorkFoodStores is an API that handles 3 endpoints.</br>
 GET Endpoint for fetching list of the closest food stores for given latitude and longitude.</br>
-GET Endpoint for fetching list of stores with a given partial name or address.</br>
+GET Endpoint for fetching list of stores with a given partial entity name or address.</br>
 POST Endpoint for populating ElasticSearch db with data given in CSV file.
 
 
