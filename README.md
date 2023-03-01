@@ -41,7 +41,7 @@ curl 'http://localhost:8080/api/store/'
 First of all, you have to generate your own password for ES if you don't have one. Then you have to open application.yml file
 and set it to password field. After starting the app you have to execute POST request to populate and create your DB.
 For the other two endpoints you have query params. Both of them have page and size query param for pagination where default value for page 
-is 1 and for size is 20. </br></br> For get request for finding the closest store you have to provide latitude, longitude, distance and unit.
+is 1 and for size is 20. </br></br> Get request for finding the closest store you have to provide latitude, longitude, distance and unit.
 Latitude must be between -90 and 90, while longitude must be between -180 and 180. Distance must be greater than 0 and unit
 can be Inches("in"), Feet("ft"), Yards("yd"), Miles("mi"), NauticMiles("nmi"), Kilometers("km"), Meters("m"), Centimeters("cm"), Millimeters("mm"). </br> </br>
 For endpoint where you get list of stores that has given condition in entity name or address, there is query param called 
